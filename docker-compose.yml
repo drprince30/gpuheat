@@ -1,0 +1,29 @@
+
+services:
+  fcct-gpu-cascade-guard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - FCCT_DB_PATH=/app/data/fcct_guard.db
+      - FCCT_AUTH_ENABLED=false
+      - FCCT_USERNAME=admin
+      - FCCT_PASSWORD=change-me
+      - PROMETHEUS_URL=http://mock-prometheus:9090
+    volumes:
+      - fcct_data:/app/data
+    depends_on:
+      - mock-prometheus
+
+  mock-prometheus:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    ports:
+      - "9090:9090"
+
+volumes:
+  fcct_data:

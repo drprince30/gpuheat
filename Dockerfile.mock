@@ -1,0 +1,6 @@
+
+FROM python:3.11-slim
+WORKDIR /mock
+COPY mock_prometheus.py /mock/mock_prometheus.py
+EXPOSE 9090
+CMD ["python", "mock_prometheus.py"]
